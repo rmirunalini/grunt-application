@@ -1,0 +1,50 @@
+module.exports = function(grunt){
+    grunt.initConfig({
+        pkg:grunt.file.readJSON('package.json'),
+        autoprefixer:{
+            options:{
+                //write task specific options
+                browsers:['last 2 versions','firefox>3']
+            },
+            your_target:{
+                //target options
+            }
+        },
+        watch:{
+            files:['css/style.css','html/index.html'],
+            tasks:['autoprefixer']
+        },
+        copy:{
+            src:'css/style.css',
+            dest:'css/styleprefixed.css'
+        },
+        cssmin:{
+            target:{
+                files:{
+                    'css/styleprefixed.min.css':['css/styleprefixed.css']
+                }
+            }
+        },
+        imagemin:{
+            files:{
+                expand:true,
+                cwd:'images/',
+                src:['**/*.{jpg,png,gif}'],
+                dest:'images/build'
+            }
+        },
+        uglify:{
+            target:{
+                files:{
+                    'js/output.min.js':['js/*.js']
+                }
+            }
+        }
+    });
+    grunt.loadNpmTasks('grunt-autoprefixer');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+}
